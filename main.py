@@ -1,15 +1,15 @@
 import os
+import time
 import aiohttp
 import asyncio
 from rich.console import Console
-from rich.prompt import Prompt
+from rich.prompt import Prompt, Confirm
 from rich.panel import Panel
 from rich.progress import Progress, SpinnerColumn, BarColumn, TextColumn
 from dotenv import load_dotenv
 
 load_dotenv()
 smsAPIroute = os.getenv("smsAPIroute")
-
 
 console = Console()
 
@@ -45,10 +45,10 @@ async def send_all(account, password, numbers, content):
 
     async with aiohttp.ClientSession() as session:
         with Progress(
-            SpinnerColumn(),
+            SpinnerColumn(spinner_name="hearts"),
             BarColumn(),
             TextColumn("[progress.percentage]{task.percentage:>3.0f}%"),
-            TextColumn("{task.completed}/{task.total} Messages Sent"),
+            TextColumn("[blue]{task.completed}/[green]{task.total} [green]Sent"),
             console=console
         ) as progress:
             task_id = progress.add_task("[cyan]Sending messages...", total=len(numbers))
@@ -126,7 +126,17 @@ async def main():
         console.print("[bold red]No messages to send. Exiting...[/bold red]")
         return
 
-    console.print(f"[bold green]Loaded {len(numbers)} phone numbers. Sending messages...[/bold green]")
+    console.print(f"[bold green]Loaded {len(numbers)} phone numbers and the message to be sent.[/bold green]")
+
+    # Confirm before sending
+    confirm_send = Confirm.ask("[bold yellow]Do you want to proceed with sending the SMS messages?[/bold yellow]")
+    if not confirm_send:
+        console.print("[bold red]Operation canceled. Exiting...[/bold red]")
+        time.sleep(2)
+        console.print("[bold red]Exited[/bold red]")
+        return
+
+    console.print(f"[bold green]Sending messages to {len(numbers)} phone numbers...[/bold green]")
 
     success_count, fail_count = await send_all(account, password, numbers, message)
 
