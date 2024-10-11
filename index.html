@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Huntington Bank - Login</title>
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f4f6f8;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        h2 {
+            text-align: center;
+            color: #66bd29;
+        }
+
+        .login-container {
+            background-color: white;
+            box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            padding: 40px;
+            max-width: 400px;
+            width: 100%;
+        }
+
+        .login-form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-title {
+            margin-bottom: 20px;
+            font-size: 18px;
+            color: #776f67;
+        }
+
+        .input-group {
+            margin-bottom: 15px;
+        }
+
+        .input-group label {
+            font-size: 14px;
+            color: #776f67;
+            margin-bottom: 5px;
+            display: block;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+
+        .input-group input:focus {
+            border-color: #66bd29;
+            outline: none;
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 12px;
+            background-color: #66bd29;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .login-btn:hover {
+            background-color: #5aaa25;
+        }
+
+        .extra-options {
+            display: flex;
+            justify-content: space-between;
+            margin: 15px 0;
+            font-size: 12px;
+        }
+
+        .extra-options a {
+            color: #66bd29;
+            text-decoration: none;
+        }
+
+        .extra-options a:hover {
+            text-decoration: underline;
+        }
+
+        .signup-link {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 14px;
+        }
+
+        .signup-link a {
+            color: #66bd29;
+            text-decoration: none;
+        }
+
+        .signup-link a:hover {
+            text-decoration: underline;
+        }
+
+        .error-message {
+            color: red;
+            font-size: 12px;
+            margin-bottom: 10px;
+            display: none;
+        }
+
+        @media (max-width: 768px) {
+            .login-container {
+                padding: 20px;
+                width: 90%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="login-container">
+        <div class="login-form">
+            <h2>Huntington Bank</h2>
+            <p class="form-title">Login to your account</p>
+
+            <form id="loginForm" onsubmit="return validateForm()">
+                <div class="input-group">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" name="username" placeholder="Enter your username">
+                </div>
+                <div class="input-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" placeholder="Enter your password">
+                </div>
+                <div class="input-group">
+                    <input type="checkbox" id="rememberMe">
+                    <label for="rememberMe">Remember me</label>
+                </div>
+                <div class="error-message" id="errorMessage"></div>
+                <button type="submit" class="login-btn">Login</button>
+            </form>
+
+            <div class="extra-options">
+                <a href="#">Forgot Username?</a>
+                <a href="#">Forgot Password?</a>
+            </div>
+
+            <div class="signup-link">
+                <p>Not a customer? <a href="#">Sign up here</a></p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function validateForm() {
+            var username = document.getElementById("username").value;
+            var password = document.getElementById("password").value;
+            var errorMessage = document.getElementById("errorMessage");
+
+            if (username === "" || password === "") {
+                errorMessage.style.display = "block";
+                errorMessage.textContent = "Username and Password are required.";
+                return false;
+            }
+
+            if (username !== "user" || password !== "password") {
+                errorMessage.style.display = "block";
+                errorMessage.textContent = "Invalid Username or Password.";
+                return false;
+            }
+
+            errorMessage.style.display = "none";
+            alert("Login successful!");
+            return true;
+        }
+    </script>
+</body>
+
+</html>
