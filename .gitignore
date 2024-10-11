@@ -1,4 +1,4 @@
 .env
 message.txt
 numbers.txt
-index.txt
+.DS_Store
